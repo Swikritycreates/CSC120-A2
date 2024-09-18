@@ -1,6 +1,6 @@
 from typing import Dict, Optional
 
-from computer import Computer
+from computer import *
 
 class ResaleShop:
 
@@ -18,7 +18,16 @@ class ResaleShop:
 
     def buy(self, computer: Dict):
       self.itemID += 1 # increment itemID
-      self.inventory[self.itemID] = computer
+      self.itemID = computer
+      self.inventory[self.itemID] = {
+        "description": computer.description,
+        "processor_type": computer.processor_type,
+        "hard_drive_capacity": computer.hard_drive_capacity,
+        "memory": computer.memory,
+        "operating_system": computer.operating_system,
+        "year_made": computer.year_made,
+        "price": computer.price
+    }
       return self.itemID
     
     def update_price(self, item_id: int, new_price: int):
@@ -34,13 +43,13 @@ class ResaleShop:
       else: 
           print("Item", item_id, "not found. Please select another item to sell.")
         
-    def print_inventory(self):
+    def print_inventory(self, inventory):
     # If the inventory is not empty
       if self.inventory:
          # For each item
          for item_id in self.inventory:
             # Print its details
-            print(f'Item ID: {item_id} : {self.inventory[item_id].year_made, self.inventory[item_id].price, self.inventory[item_id].description,self.inventory[item_id].hard_drive_capacity,self.inventory[item_id].operating_system, self.inventory[item_id].processor_type, self.inventory[item_id].memory }')
+            print(f'Item ID: {item_id} : {inventory[item_id] }')
       else:
         print("No inventory to display.")
 
@@ -63,20 +72,55 @@ class ResaleShop:
 
 
 def main():
-        inventory : Dict[int, Computer] = {}     # so that we always have a new value for the itemID
+        computer = Computer(
+        "Mac Pro (Late 2013)",
+        "3.5 GHc 6-Core Intel Xeon E5",
+        1024, 64,
+        "macOS Big Sur", 2013, 1500
+    )
+        inventory : Dict[int, Computer] = {"description": computer.description, "processor_type": computer.processor_type, "hard_drive_capacity": computer.hard_drive_capacity, "memory": computer.memory, "operating_system": computer.operating_system, "year_made": computer.year_made, "price": computer.price}     # so that we always have a new value for the itemID
+
 
         shop = ResaleShop(inventory)
 
-        computer1 = Computer(
-            "Mac Pro (Late 2013)",
-            "3.5 GHc 6-Core Intel Xeon E5",
-            1024, 64,
-            "macOS Big Sur", 2013, 1500
-        )
-        shop.buy(computer1)
-        shop.print_inventory()
-        shop.sell(1)
-        shop.refurbish(1, "Windows 11")
-        shop.update_price(1,40)
+      
+
+        # Print a little banner
+        print("-" * 21)
+        print("COMPUTER RESALE STORE")
+        print("-" * 21)
+
+        # Add it to the resale store's inventory
+        print("Buying", "description")
+        print("Adding to inventory...")
+        computer_id = shop.buy(computer)
+        print("Done.\n")
+
+        # Make sure it worked by checking inventory
+        print("Checking inventory...")
+        shop.print_inventory(inventory)
+        print("Done.\n")
+
+        # Now, let's refurbish it
+        new_OS = "MacOS Monterey"
+        print("Refurbishing Item ID:", computer_id, ", updating OS to", new_OS)
+        print("Updating inventory...")
+        shop.refurbish(computer_id, new_OS)
+        print("Done.\n")
+
+        # Make sure it worked by checking inventory
+        print("Checking inventory...")
+        shop.print_inventory(inventory)
+        print("Done.\n")
+        
+        # Now, let's sell it!
+        print("Selling Item ID:", computer_id)
+        shop.sell(computer_id)
+        
+        # Make sure it worked by checking inventory
+        print("Checking inventory...")
+        shop.print_inventory(inventory)
+        print("Done.\n")
+            
 main()
 

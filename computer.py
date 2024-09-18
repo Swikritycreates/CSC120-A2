@@ -36,17 +36,12 @@ class Computer:
 
 
 def main():
+
     
     # First, let's make a computer
-    computer1 = Computer(
-        "Mac Pro (Late 2013)",
-        "3.5 GHc 6-Core Intel Xeon E5",
-        1024, 64,
-        "macOS Big Sur", 2013, 1500
+    computer1 = Computer("Mac Pro (Late 2013)", "3.5 Ghc 6-core Intel Xeon 5", 1024, 64, "macos Big Sur", 2013, 1500
     )
 
-
-print(Computer)
 
 #Only call main() if I am running this program directly
 if __name__ == "__main__":
