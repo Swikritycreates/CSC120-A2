@@ -2,7 +2,7 @@
 from typing import Dict, Union
 
 # Import the functions we wrote in procedural_resale_shop.py
-from procedural_resale_shop import buy, update_price, sell, print_inventory, refurbish
+from oo_resale_shop import buy, update_price, sell, print_inventory, refurbish
 
 """ This helper function takes in a bunch of information about a computer,
     and packages it up into a python dictionary to make it easier to store
